@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Косметичні Рецепти</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            position: relative; /* Для позиціонування декору */
+            overflow: hidden; /* Приховує елементи, що виходять за межі вікна */
+        }
+
+        .decorative-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(106, 0, 173, 0.5); /* Напівпрозорий фіолетовий колір */
+            width: 200px;
+            height: 200px;
+            z-index: -1; /* Виставляє елементи за основний контент */
+            animation: move 10s infinite alternate;
+        }
+
+        .decorative-element:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-duration: 8s;
+        }
+
+        .decorative-element:nth-child(2) {
+            top: 30%;
+            left: 60%;
+            animation-duration: 12s;
+        }
+
+        .decorative-element:nth-child(3) {
+            top: 60%;
+            left: 30%;
+            animation-duration: 15s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                transform: translateY(-20px) scale(1.2);
+            }
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .main-content {
+            flex: 3;
+            padding-right: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+            padding-left: 20px;
+            border-left: 2px solid #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6a0dad;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input, .form-container textarea, .form-container select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+            overflow-wrap: break-word; /* Додає перенесення довгих слів */
+        }
+
+        .form-container button {
+            background: #6a0dad;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background: #53128e;
+        }
+
+        .view-toggle {
+            background: #6a0dad;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .view-toggle:hover {
+            background: #53128e;
+        }
+
+        .article {
+            background: #fff;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            word-wrap: break-word; /* Додає перенесення довгих слів */
+        }
+
+        .article img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .article h2 {
+            margin: 0;
+            color: #6a0dad;
+        }
+
+        .article .meta {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .article p {
+            margin: 10px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word; /* Додає перенесення довгих слів */
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .sidebar ul li a {
+            color: #6a0dad;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: #53128e;
+        }
+
+        #recipeList {
+            display: none;
+        }
+
+        footer {
+            background-color: #f3e5f5;
+            text-align: center;
+            padding: 10px 0;
+            border-top: 2px solid #e0e0e0;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #6a0dad;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .article-buttons {
+            margin-top: 10px;
+        }
+
+        .article-buttons button {
+            background: #ff5733;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .article-buttons button:hover {
+            background: #c70039;
+        }
+    </style>
+</head>
+<body>
+    <!-- Декоративні елементи -->
+    <div class="decorative-element"></div>
+    <div class="decorative-element"></div>
+    <div class="decorative-element"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Збірник Рецептів Домашньої Косметики</h1>
+            <input type="text" id="searchInput" placeholder="Пошук за ключовими словами" onkeyup="searchRecipes()">
+            <div id="formSection" class="form-container">
+                <h2>Додати Рецепт</h2>
+                <input type="text" id="recipeName" placeholder="Назва рецепту">
+                <select id="recipeCategory">
+                    <option value="Догляд за обличчям">Догляд за обличчям</option>
+                    <option value="Догляд за тілом">Догляд за тілом</option>
+                    <option value="Догляд за волоссям">Догляд за волоссям</option>
+                    <option value="Рецепти з натуральних інгредієнтів">Рецепти з натуральних інгредієнтів</option>
+                    <option value="Ефірні олії">Ефірні олії</option>
+                    <option value="Догляд за нігтями">Догляд за нігтями</option>
+                </select>
+                <textarea id="recipeInstructions" rows="5" placeholder="Інструкції"></textarea>
+                <button onclick="addRecipe()">Додати Рецепт</button>
+            </div>
+            <div id="articleList">
+                <!-- Тут будуть відображатися додані рецепти -->
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h2>Категорії</h2>
+            <ul id="categoryList">
+                <!-- Категорії з лічильниками рецептів -->
+            </ul>
+            <button class="view-toggle" onclick="toggleView()">Переглянути всі рецепти</button>
+        </div>
+    </div>
+    <footer>
+        <p>Цей сайт створений для обміну рецептами домашньої косметики. Всі матеріали належать їх авторам.</p>
+        <p>Зв'язатися з автором: <a href="mailto:example@example.com">example@example.com</a></p>
+        <p>© 2024 Збірник Рецептів Домашньої Косметики</p>
+    </footer>
+
+    <script>
+        const categories = {
+            "Догляд за обличчям": 0,
+            "Догляд за тілом": 0,
+            "Догляд за волоссям": 0,
+            "Рецепти з натуральних інгредієнтів": 0,
+            "Ефірні олії": 0,
+            "Догляд за нігтями": 0,
+        };
+
+        function updateCategoryList() {
+            const categoryList = document.getElementById('categoryList');
+            categoryList.innerHTML = '';
+            for (const category in categories) {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#" onclick="filterByCategory('${category}')">${category} (${categories[category]})</a>`;
+                categoryList.appendChild(li);
+            }
+        }
+
+        function filterByCategory(category) {
+            const articles = document.querySelectorAll('.article');
+            articles.forEach(article => {
+                if (article.dataset.category === category) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleView() {
+            const formSection = document.getElementById('formSection');
+            const articleList = document.getElementById('articleList');
+            const toggleButton = document.querySelector('.view-toggle');
+            
+            if (formSection.style.display === 'none') {
+                formSection.style.display = 'block';
+                articleList.style.display = 'none';
+                toggleButton.textContent = 'Переглянути всі рецепти';
+            } else {
+                formSection.style.display = 'none';
+                articleList.style.display = 'block';
+                toggleButton.textContent = 'Додати новий рецепт';
+            }
+        }
+
+        function addRecipe() {
+            const name = document.getElementById('recipeName').value;
+            const category = document.getElementById('recipeCategory').value;
+            const instructions = document.getElementById('recipeInstructions').value;
+
+            if (name && instructions) {
+                const articleList = document.getElementById('articleList');
+                const article = document.createElement('div');
+                article.className = 'article';
+                article.dataset.category = category;
+
+                const date = new Date().toLocaleDateString('uk-UA');
+                article.innerHTML = `
+                    <h2>${name}</h2>
+                    <p class="meta">Категорія: ${category} | Дата: ${date}</p>
+                    <p>${instructions}</p>
+                    <div class="article-buttons">
+                        <button onclick="editRecipe(this)">Редагувати</button>
+                        <button onclick="deleteRecipe(this)">Видалити</button>
+                    </div>
+                `;
+
+                articleList.insertBefore(article, articleList.firstChild);
+
+                categories[category]++;
+                updateCategoryList();
+
+                saveRecipes();
+
+                document.getElementById('recipeName').value = '';
+                document.getElementById('recipeInstructions').value = '';
+            } else {
+                alert('Будь ласка, заповніть всі поля.');
+            }
+        }
+
+        function editRecipe(button) {
+            const article = button.closest('.article');
+            const name = article.querySelector('h2').textContent;
+            const instructions = article.querySelector('p').textContent;
+            const category = article.dataset.category;
+
+            document.getElementById('recipeName').value = name;
+            document.getElementById('recipeCategory').value = category;
+            document.getElementById('recipeInstructions').value = instructions;
+
+            deleteRecipe(button); // Видаляємо рецепт, щоб додати його знову з оновленими даними
+        }
+
+        function deleteRecipe(button) {
+            const article = button.closest('.article');
+            const category = article.dataset.category;
+
+            article.remove();
+
+            categories[category]--;
+            updateCategoryList();
+
+            saveRecipes();
+        }
+
+        function searchRecipes() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const articles = document.querySelectorAll('.article');
+
+            articles.forEach(article => {
+                const title = article.querySelector('h2').textContent.toLowerCase();
+                const instructions = article.querySelector('p').textContent.toLowerCase();
+
+                if (title.includes(query) || instructions.includes(query)) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        }
+
+        function saveRecipes() {
+            const articles = document.querySelectorAll('.article');
+            const recipeData = [];
+
+            articles.forEach(article => {
+                recipeData.push({
+                    name: article.querySelector('h2').textContent,
+                    category: article.dataset.category,
+                    instructions: article.querySelector('p').textContent,
+                    date: article.querySelector('.meta').textContent.split(' | ')[1].split(': ')[1]
+                });
+            });
+
+            localStorage.setItem('recipes', JSON.stringify(recipeData));
+        }
+
+        function loadRecipes() {
+            const recipeData = JSON.parse(localStorage.getItem('recipes')) || [];
+
+            recipeData.forEach(data => {
+                const articleList = document.getElementById('articleList');
+                const article = document.createElement('div');
+                article.className = 'article';
+                article.dataset.category = data.category;
+
+                article.innerHTML = `
+                    <h2>${data.name}</h2>
+                    <p class="meta">Категорія: ${data.category} | Дата: ${data.date}</p>
+                    <p>${data.instructions}</p>
+                    <div class="article-buttons">
+                        <button onclick="editRecipe(this)">Редагувати</button>
+                        <button onclick="deleteRecipe(this)">Видалити</button>
+                    </div>
+                `;
+
+                articleList.insertBefore(article, articleList.firstChild);
+
+                categories[data.category]++;
+            });
+
+            updateCategoryList();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRecipes);
+    </script>
+</body>
+</html>
+
